@@ -20,11 +20,10 @@ Sentelito es un habitante de Entel Landia. Cada cierto tiempo, los Dioses Mensaj
 - Esperar que se configure todo el proyecto
 - En la ventana del Proyecto, dirigirse a la carpeta Scenes
 - Hacer doble click sobre SplashScene
-- Si se desea utilizar el Sentel-API desplegada, dirigirse al último paso
-- Si se desea utilizar el Sentel-API de manera local luego de ejecutar el proyecto en Python, seguir con los pasos
-- Dirigirse a la carpeta Scripts y abrir el script GameManager.cs
-- En las lineas 280, 299, 315, 337 y 365, reemplazar ```https://xisksentel.loca.lt``` por ```http://127.0.0.1:5000``` para apuntar al servidor corriendo localmente.
+- Asegurarse que Sentel-API (https://github.com/LuisRivera1699/sentel-api) esté corriendo localmente
 - Ejecutar el juego apretando el botón de Play
+
+Cuando se desee publicar el juego y levantar Sentel-API en un servidor dedicado de producción. Dirigirse a la carpeta Scripts, abrir el script GameManager.cs y modificar el valor del baseURL en la línea 38 por la nueva ruta de producción del API.
 
 ## Generación de Build del juego para WebGL
 
