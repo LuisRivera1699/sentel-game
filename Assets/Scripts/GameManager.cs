@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
 
+    private string baseURL = "http://127.0.0.1:5000"; // Cambiar a la ruta de despliegue del Sentel-API cuando se quiera desplegar el API en un servidor dedicado
+
     // spawnObjectsPosition: define el Transform de la posición de spawneo de objetos
     // obstacles: define el arreglo de obstáculos
     // rewardGroups: define el arreglo de recompensas de juego
@@ -277,7 +279,7 @@ public class GameManager : MonoBehaviour
     // para obtener los 5 mejores puntajes de los usuarios y pintarlos en los
     // Text del arreglo scores
     IEnumerator GetScores() {
-        UnityWebRequest www = UnityWebRequest.Get($"https://xisksentel.loca.lt/scores");
+        UnityWebRequest www = UnityWebRequest.Get($"{baseURL}/scores");
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success) {
@@ -296,7 +298,7 @@ public class GameManager : MonoBehaviour
     // para obtener la posición en el ranking de puntajes del celular ingresado y setear
     // texto de currentRank
     IEnumerator GetPhoneRank() {
-        UnityWebRequest www = UnityWebRequest.Get($"https://xisksentel.loca.lt/scores/{phoneNumber}/rank");
+        UnityWebRequest www = UnityWebRequest.Get($"{baseURL}/scores/{phoneNumber}/rank");
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success) {
@@ -312,7 +314,7 @@ public class GameManager : MonoBehaviour
     // Si el servicio responde que sí es de Entel, se setean las vidas a 5 y se ejecuta el método SetTextLifes
     // Finalmente se inicia la Corrutina con el método GetPhoneScore
     IEnumerator CheckIfPhoneIsEntel() {
-        UnityWebRequest www = UnityWebRequest.Get($"https://xisksentel.loca.lt/phones/{phoneNumber}/entel");
+        UnityWebRequest www = UnityWebRequest.Get($"{baseURL}/phones/{phoneNumber}/entel");
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success) {
@@ -334,7 +336,7 @@ public class GameManager : MonoBehaviour
     // Se ejecuta el método CloseCanvas con el Canvas fifthDialog y se setea la variable stopped a 
     // false para iniciar el juego
     IEnumerator GetPhoneScore() {
-        UnityWebRequest www = UnityWebRequest.Get($"https://xisksentel.loca.lt/scores/{phoneNumber}");
+        UnityWebRequest www = UnityWebRequest.Get($"{baseURL}/scores/{phoneNumber}");
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success) {
@@ -361,7 +363,7 @@ public class GameManager : MonoBehaviour
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection($"phoneNumber={phoneNumber}&lastScore={scoreData.lastScore}&bestScore={scoreData.bestScore}"));
 
-        UnityWebRequest post = UnityWebRequest.Post("https://xisksentel.loca.lt/scores", formData);
+        UnityWebRequest post = UnityWebRequest.Post($"{baseURL}/scores", formData);
         yield return post.SendWebRequest();
         if (post.result != UnityWebRequest.Result.Success) {
             Debug.Log(post.error);
